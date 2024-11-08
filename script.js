@@ -22,7 +22,38 @@ const techUrls = {
   Sass: "https://sass-lang.com/",
   Ember: "https://emberjs.com/"
 };
+const descriptions = {
+  JS: "JavaScript: A versatile language primarily used for web development.",
+  React: "React: A JavaScript library for building user interfaces.",
+  Vue: "Vue: A progressive framework for building UIs and single-page applications.",
+  Angular: "Angular: A platform for building mobile and desktop web applications.",
+  Node: "Node.js: A JavaScript runtime for server-side programming.",
+  Sass: "Sass: A preprocessor scripting language that is interpreted into CSS.",
+  Ember: "Ember: A framework for building ambitious web applications."
+};
 let current = 1;
+const tooltip = document.querySelector(".tooltip");
+const centerTooltip = document.querySelector(".center-tooltip");
+
+boxes.forEach((box, index) => {
+  box.addEventListener("mouseover", () => {
+    const techName = techs[index];
+    centerTooltip.textContent = descriptions[techName];
+    centerTooltip.style.opacity = 1; // Show the tooltip
+    
+    // Set the box shadow color based on the framework's color
+    centerTooltip.style.boxShadow = `
+      0 0 10px ${colors[index]},
+      0 0 20px ${colors[index]},
+      0 0 30px ${colors[index]},
+      0 0 40px ${colors[index]}`;
+  });
+
+  box.addEventListener("mouseout", () => {
+    centerTooltip.style.opacity = 0; // Hide the tooltip
+    centerTooltip.style.boxShadow = "none"; // Remove the box shadow
+  });
+});
 
 const textStyle = () => {
   heading.style.color = colors[current - 1];
@@ -37,6 +68,13 @@ btn.addEventListener("click", () => {
   if (url) {
     window.location.href = url;
   }
+});
+
+btn.addEventListener("click", () => {
+  document.body.classList.add("fade-out");
+  setTimeout(() => {
+      window.location.href = url;
+  }, 500);
 });
 
 let interval = setInterval(() => {
